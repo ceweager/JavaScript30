@@ -78,35 +78,21 @@
       return ((num / 60) * 360) + 90;
     }
 
-    function updateSeconds(now) {
-      const seconds = now.getSeconds();
-      const secondDegrees = calcDegrees(seconds);
-      const secondHand = document.querySelector(".second-hand");
-      secondHand.style.transform = `rotate(${secondDegrees}deg)`;
+    function updateHand(time, hand) {
+      const degrees = calcDegrees(time);
+      const clockHand = document.querySelector(`.${hand}-hand`);
+      clockHand.style.transform = `rotate(${degrees}deg)`;
     }
 
-    function updateMinutes(now) {
-      const minutes = now.getMinutes();
-      const minuteDegrees = calcDegrees(minutes);
-      const minuteHand = document.querySelector(".min-hand");
-      minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
-    }
-
-    function updateHours(now) {
-      const hours = now.getHours();
-      const hourDegrees = calcDegrees(hours);
-      const hourHand = document.querySelector(".min-hand");
-      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
-    }
 
     function setDate() {
       const now = new Date();
-      updateSeconds(now);
-      updateMinutes(now);
-      updateHours(now);
+      hands = [[now.getSeconds(), 'second'], [now.getMinutes(), 'min'], [now.getHours(), 'hour']]
+      hands.forEach(hand => updateHand(hand[0], hand[1]))
     }
 
     setInterval(setDate, 1000);
+
   </script>
 </body>
 
